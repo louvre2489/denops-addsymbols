@@ -2,7 +2,7 @@
 Enclose the word at the cursor position with symbols.
 
 ## Requirements
-This requires [Deno]*(https://deno.land/) and [denops.vim](https://github.com/vim-denops/denops.vim).
+This requires [Deno]*(https://deno.land) and [denops.vim](https://github.com/vim-denops/denops.vim).
 
 ## Usage
 ### Enclose with ''
