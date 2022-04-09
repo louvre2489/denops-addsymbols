@@ -6,14 +6,43 @@ This requires [Deno](https://deno.land) and [denops.vim](https://github.com/vim-
 
 ## Usage
 ### Enclose with ''
-```:DSQ``` word is converted to 'word'
+```
+:DSQ
+
+word is converted to 'word'
+```
+
 ### Enclose with ""
-```:DDQ``` word is converted to "word"
+```
+:DDQ
+
+word is converted to "word"
+```
+
 ### Enclose with {}
-```:DB``` word is converted to {word}
+```
+:DB
+
+word is converted to {word}
+```
+
 ### Enclose with [] 
-```:DS``` word is converted to [word]
+```
+:DS
+
+word is converted to [word]
+```
+
 ### Enclose with <>
-```:DA``` word is converted to <word>
+```
+:DA
+
+word is converted to <word>
+```
+
 ### Enclose with ()
-```:DP``` word is converted to (word)
+```
+:DP
+
+word is converted to (word)
+```
