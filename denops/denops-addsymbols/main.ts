@@ -4,20 +4,23 @@ import { decorate } from "https://deno.land/x/denops_std@v3.3.0/buffer/mod.ts";
 
 export async function main(denops: Denops): Promise<void> {
 
+  // 対象の単語の色を変更する
   const hiColorKey = "AddSymbols";
-  const hiColor = "lightgrey";
+  const hiBgColor = 186;
+  const hiFgColor = 16;
+
+  await denops.cmd(`highlight ${hiColorKey} ctermbg = ${hiBgColor} ctermfg = ${hiFgColor}`);
 
   denops.dispatcher = {
     async addSymbol(...symbols: Array<unknown>): Promise<void> {
 
-//      await denops.cmd(`highlight ${hiColorKey} ctermbg = ${hiColor}`);
       // 記号
       let bef = (symbols as Array<String>)[0];
       let aft = (symbols as Array<String>)[1];
 
       // ハイライトする位置
       let line = (await denops.eval(`line(".")`)) as number;
-      let col = (await denops.eval(`col(".")`)) as number;
+      let col = ((await denops.eval(`col(".")`)) as number) + 1;
 
       // 記号を付ける単語
       let cword = (await denops.eval(`expand("<cword>")`)) as String;
