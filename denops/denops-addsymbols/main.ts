@@ -21,14 +21,19 @@ export async function main(denops: Denops): Promise<void> {
       let bef = (symbols as Array<String>)[0];
       let aft = (symbols as Array<String>)[1];
 
-      // ハイライトする位置
+      // カーソル位置
       let line = (await denops.eval(`line(".")`)) as number;
-      let col = ((await denops.eval(`col(".")`)) as number) + 1;
+      let col = ((await denops.eval(`col(".")`)) as number);
 
       // 記号を付ける単語
       let cword = (await denops.eval(`expand("<cword>")`)) as String;
-      // 単語の文字数
-      let len = cword.length;
+
+      // いったん単語の末尾に移動する
+      await denops.cmd(`normal e`);
+      let end = ((await denops.eval(`col(".")`)) as number) + 1;
+
+      // ハイライトする文字数
+      let len = end - col;
 
       denops.cmd(`substitute/${cword}/${bef}${cword}${aft}/`);
 
@@ -36,11 +41,14 @@ export async function main(denops: Denops): Promise<void> {
       await decorate(denops, bufnr, [
         {
           line: line,
-          column: col,
+          column: col + 1,
           length: len,
           highlight: hiColorKey,
         },
       ]);
+
+      // カーソル位置を元に戻す
+      await denops.eval(`cursor(${line}, ${col})`);
 
       // 指定時間後にハイライトを削除する
       setTimeout(() => {
