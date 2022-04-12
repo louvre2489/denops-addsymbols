@@ -9,10 +9,13 @@ export async function main(denops: Denops): Promise<void> {
   const hiBgColor = 186;
   const hiFgColor = 16;
 
-  await denops.cmd(`highlight ${hiColorKey} ctermbg = ${hiBgColor} ctermfg = ${hiFgColor}`);
+  // ハイライト持続期間(ms)
+  const highlightTime = 1000;
 
   denops.dispatcher = {
     async addSymbol(...symbols: Array<unknown>): Promise<void> {
+
+      await denops.cmd(`highlight ${hiColorKey} ctermbg = ${hiBgColor} ctermfg = ${hiFgColor}`);
 
       // 記号
       let bef = (symbols as Array<String>)[0];
@@ -38,6 +41,11 @@ export async function main(denops: Denops): Promise<void> {
           highlight: hiColorKey,
         },
       ]);
+
+      // 指定時間後にハイライトを削除する
+      setTimeout(() => {
+        denops.eval(`nvim_buf_clear_namespace(${bufnr}, -1, ${line - 1}, ${line})`);
+      }, highlightTime);
     },
   };
 
